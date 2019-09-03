@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const GameResult = require('./gameResult');
+const User = require('./user');
 const { Schema } = mongoose;
 
 const gameSchema = new Schema(
@@ -30,6 +31,20 @@ gameSchema.methods({
     }
 
     return max;
+  },
+  transform() {
+    const transformed = {};
+    transformed['title'] = this.title;
+    transformed['results'] = [];
+    for (let i = 0; i < this.gameResults.length; i ++) {
+      const gR = await GameResult.findById(this.gameResults[i]).populate('player');
+      const pr = await User.findById(gR.player.userId);
+      transformed['results'].push({
+        player: pr.name,
+        score: gR.score
+      });
+    }
+    return transformed;
   }
 });
 

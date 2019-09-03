@@ -7,16 +7,6 @@ const playerSchema = new Schema(
       type: Schema.Types.ObjectId,
       ref: 'User'
     },
-    name: {
-      type: String,
-      required: true
-    },
-    birthday: {
-      type: String
-    },
-    country: {
-      type: String
-    },
     gameResults: [{
       type: Schema.Types.ObjectId,
       ref: 'GameResult'

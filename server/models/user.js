@@ -10,6 +10,16 @@ const userSchema = new Schema(
       type: String,
       required: true,
     },
+    name: {
+      type: String,
+      required: true
+    },
+    birthday: {
+      type: String
+    },
+    country: {
+      type: String
+    },
     password: {
       type: String,
       min: 8,
@@ -25,5 +35,11 @@ userSchema.statics.findByToken = async function(token) {
   const decoded = jwt.verify(token, process.env.SECRET);
   return this.findOne({ _id: decoded.id });
 };
+
+userSchema.method({
+  passwordMatches(password) {
+    return bcrypt.compareSync(password, this.password);
+  },
+});
 
 module.exports = mongoose.model('User', userSchema);
