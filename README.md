@@ -1,5 +1,4 @@
-# MERN-GraphQL
-
+# MERN + GraphQL
 
 ## Requirements
 
@@ -9,10 +8,13 @@
 npm install
 ```
 
+**Configure app**
+
+* Rename `config.example.js` to `config.js` in `/src` dir.
+* In `config.js` file, replace environment variables with your info.
+* Rename `.env.example` file to `.env` and replace `SECRET` environment value with your own key.
 
 ## Running
-
-Make sure to add a `config.js` file in the `config` folder. See the example there for more details.
 
 Production mode:
 

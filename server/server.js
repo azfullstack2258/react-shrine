@@ -38,7 +38,7 @@ app.use(
     context: await (async () => {
       const { token } = request.cookies;
       const user = await User.findByToken(token);
-      return { user, pubsub };
+      return { user };
     })(),
     graphiql: true
   }))

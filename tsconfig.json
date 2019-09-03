@@ -1,0 +1,25 @@
+{
+  "compilerOptions": {
+    "lib": ["es2015", "dom"],
+    "outDir": "./dist/",
+    "noImplicitAny": false,
+    "module": "es6",
+    "target": "es6",
+    "jsx": "react",
+    "allowJs": true,
+    "baseUrl": ".",
+    "moduleResolution": "node",
+    "typeRoots": ["./typings"],
+    "paths": {
+      "app/*": ["client/app/*"],
+      "assets/*": ["client/public/assets/*"],
+      "enums/*": ["client/app/enums/*"],
+      "interfaces/*": ["client/app/interfaces/*"],
+      "validation/": ["client/app/validation/index.ts"],
+      "shared/": ["shared/*"],
+      "/*": ["/*"]
+    },
+    "allowSyntheticDefaultImports": true,
+    "experimentalDecorators": true
+  }
+}
