@@ -1,4 +1,4 @@
-const { ApolloServer, gql, SchemaDirectiveVisitor } = require('apollo-server');
+const { SchemaDirectiveVisitor } = require('apollo-server');
 const { DirectiveLocation, GraphQLDirective, defaultFieldResolver } = require('graphql');
 
 class IsAuthenticated extends SchemaDirectiveVisitor {

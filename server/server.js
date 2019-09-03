@@ -12,12 +12,8 @@ const webpackDevMiddleware = require('webpack-dev-middleware');
 const webpackHotMiddleware = require('webpack-hot-middleware');
 const User = require('./models/user');
 const schema = require('./graphql/schema');
-const pubsub = require('./graphql/pubSub');
 const config = require('../config/config');
 const webpackConfig = require('../webpack.config');
-
-const WS_PORT = 5000;
-const WS_GQL_PATH = '/subscriptions';
 
 const isDev = process.env.NODE_ENV !== 'production';
 const port = process.env.PORT || 3000;
