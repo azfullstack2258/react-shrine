@@ -14,6 +14,11 @@ import Badge from '@material-ui/core/Badge';
 import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import NotificationsIcon from '@material-ui/icons/Notifications';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemIcon from '@material-ui/core/ListItemIcon';
+import LogoutIcon from '@material-ui/icons/PowerSettingsNew';
+import ListItemText from '@material-ui/core/ListItemText';
+
 import { mainListItems, secondaryListItems } from './listItems';
 
 import Footer from '../footer/Footer';
@@ -131,6 +136,15 @@ const App = ({ classes, children, history }) => {
               >
                 Dashboard
               </Typography>
+              <Typography
+                component="h1"
+                variant="h6"
+                color="inherit"
+                noWrap
+                className={classes.title}
+              >
+                {`Welcome ${JSON.parse(Auth.getUser()).name}`}
+              </Typography>
               <IconButton color="inherit">
                 <Badge badgeContent={4} color="secondary">
                   <NotificationsIcon />
@@ -153,7 +167,21 @@ const App = ({ classes, children, history }) => {
             <Divider />
             <List>{mainListItems}</List>
             <Divider />
-            <List>{secondaryListItems}</List>
+            <List>
+              {secondaryListItems}
+              <ListItem
+                button
+                onClick={() => {
+                  Auth.logout();
+                  history.push('/login');
+                }}
+              >
+                <ListItemIcon>
+                  <LogoutIcon />
+                </ListItemIcon>
+                <ListItemText primary="Logout" />
+              </ListItem>
+            </List>
           </Drawer>
         </>
       )}

@@ -1,4 +1,5 @@
 import React from 'react';
+import { withRouter } from 'react-router-dom';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -9,7 +10,7 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { withStyles } from '@material-ui/core/styles';
 
-import { withSignup } from 'app/providers/Auth';
+import { withCreateUser } from '../../providers/Auth';
 import Auth from 'app/utils/auth';
 
 const styles = theme => ({
@@ -42,8 +43,10 @@ const styles = theme => ({
   },
 });
 
-@withSignup
-class SignUp {
+@withRouter
+@withStyles(styles, { withTheme: true })
+@withCreateUser
+class SignUp extends React.Component {
   state = {
     firstName: '',
     lastName: '',
@@ -52,6 +55,7 @@ class SignUp {
     confirm: '',
   };
   handleChange = name => e => {
+    console.log(name, e.target.value);
     this.setState({ [name]: e.target.value });
   };
   handleSubmit = e => {
@@ -68,13 +72,6 @@ class SignUp {
         const { data } = res;
         const { fullName, token, email } = data.createUser;
         Auth.setUser(fullName, token, email);
-
-        const redirect = new URLSearchParams(location.search).get('redirect');
-
-        if (redirect) {
-          window.location.href = redirect;
-          return;
-        }
 
         this.props.history.push('/');
       })
@@ -96,7 +93,7 @@ class SignUp {
           <Typography component="h1" variant="h5">
             Sign up
           </Typography>
-          <form className={classes.form} noValidate>
+          <form className={classes.form} noValidate onSubmit={this.handleSubmit}>
             <Grid container spacing={8}>
               <Grid item xs={12} sm={6}>
                 <TextField
@@ -190,4 +187,4 @@ class SignUp {
   }
 }
 
-export default withStyles(styles, { withTheme: true })(SignUp);
+export default SignUp;

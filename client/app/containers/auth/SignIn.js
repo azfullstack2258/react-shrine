@@ -46,6 +46,7 @@ const styles = theme => ({
   },
 });
 
+@withStyles(styles, { withTheme: true })
 @withLogin
 class SignIn extends React.Component {
   state = {
@@ -74,11 +75,6 @@ class SignIn extends React.Component {
 
         Auth.setUser(fullName, token, email);
 
-        const redirect = new URLSearchParams(location.search).get('redirect');
-
-        if (redirect) {
-          window.location.href = redirect;
-        }
         this.props.history.push('/');
       })
       .catch(err => {
@@ -158,4 +154,4 @@ class SignIn extends React.Component {
   }
 }
 
-export default withStyles(styles)(SignIn);
+export default SignIn;
