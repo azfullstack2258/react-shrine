@@ -8,26 +8,26 @@ import Input from '@material-ui/core/Input';
 
 const styles = () => ({
   container: {
-    display: 'flex'
+    display: 'flex',
   },
   button: {
     minWidth: 40,
-    padding: 4
+    padding: 4,
   },
   leftButton: {
-    borderRadius: '4px 0px 0px 4px'
+    borderRadius: '4px 0px 0px 4px',
   },
   rightButton: {
-    borderRadius: '0px 4px 4px 0px'
+    borderRadius: '0px 4px 4px 0px',
   },
   input: {
     textAlign: 'center',
-    width: 40
+    width: 40,
   },
   inputRoot: {
     borderTop: '1px solid rgba(0, 0, 0, 0.23)',
-    borderBottom: '1px solid rgba(0, 0, 0, 0.23)'
-  }
+    borderBottom: '1px solid rgba(0, 0, 0, 0.23)',
+  },
 });
 
 export const NumberInput = ({ classes, initial, min, max, onUpdate }) => {
@@ -83,7 +83,7 @@ export const NumberInput = ({ classes, initial, min, max, onUpdate }) => {
         value={count}
         classes={{
           input: classes.input,
-          root: classes.inputRoot
+          root: classes.inputRoot,
         }}
       />
       <Button
@@ -101,11 +101,11 @@ NumberInput.propTypes = {
   classes: PropTypes.object.isRequired,
   initial: PropTypes.number,
   min: PropTypes.number,
-  max: PropTypes.number
+  max: PropTypes.number,
 };
 
 NumberInput.defaultProps = {
-  initial: 0
+  initial: 0,
 };
 
 export default withStyles(styles)(NumberInput);
