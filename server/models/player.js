@@ -5,14 +5,16 @@ const playerSchema = new Schema(
   {
     userId: {
       type: Schema.Types.ObjectId,
-      ref: 'User'
+      ref: 'User',
     },
-    gameResults: [{
-      type: Schema.Types.ObjectId,
-      ref: 'GameResult'
-    }]
+    gameResults: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: 'GameResult',
+      },
+    ],
   },
-  { timestamps: true }
+  { timestamps: true },
 );
 
 module.exports = mongoose.model('Player', playerSchema);

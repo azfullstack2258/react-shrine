@@ -1,17 +1,17 @@
 const Game = require('../../../models/game');
 
-const getGames = async (obj, args, cx) => {
+const games = async (obj, args, cx) => {
   const { user } = cx;
 
   try {
-    const games = await Game.find().populate('gameResults');
+    const allGames = await Game.find().populate('gameResults');
 
-    return games.transform();
+    return allGames.map(game => game.transform());
   } catch (err) {
     throw err;
   }
 };
 
 module.exports = {
-  query: { getGames },
+  query: { games },
 };

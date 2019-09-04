@@ -55,5 +55,5 @@ async function login(obj, args) {
 }
 
 module.exports = {
-  mutation: { login, createUser }
+  mutation: { login, createUser },
 };

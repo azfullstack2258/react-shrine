@@ -3,19 +3,19 @@ const gameHandlers = require('./handleGenerators/game');
 const authDirectivesHandlers = require('./directives/auth');
 
 const query = {
-  ...gameHandlers.query
+  ...gameHandlers.query,
 };
 
 const mutation = {
-  ...authHandlers.mutation
+  ...authHandlers.mutation,
 };
 
 const directive = {
-  ...authDirectivesHandlers
+  ...authDirectivesHandlers,
 };
 
 module.exports = {
   query,
   mutation,
-  directive
+  directive,
 };

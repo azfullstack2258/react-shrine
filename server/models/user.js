@@ -12,13 +12,13 @@ const userSchema = new Schema(
     },
     name: {
       type: String,
-      required: true
+      required: true,
     },
     birthday: {
-      type: String
+      type: String,
     },
     country: {
-      type: String
+      type: String,
     },
     password: {
       type: String,
