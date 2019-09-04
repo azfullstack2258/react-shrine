@@ -8,23 +8,10 @@ import {
   Checkbox,
   Link,
   Grid,
-  Container,
   Typography,
 } from '@material-ui/core';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import { withStyles } from '@material-ui/core/styles';
-import { auto } from 'html-webpack-plugin/lib/chunksorter';
-
-const Copyright = () => (
-  <Typography variant="body2" color="textSecondary" align="center">
-    {'Copyright © '}
-    <Link color="inherit" href="/">
-      Your Website
-    </Link>{' '}
-    {new Date().getFullYear()}
-    {'.'}
-  </Typography>
-);
 
 const styles = theme => ({
   '@global': {
@@ -117,7 +104,6 @@ const SignIn = ({ classes }) => {
           </Grid>
         </form>
       </div>
-      {Copyright()}
     </div>
   );
 };

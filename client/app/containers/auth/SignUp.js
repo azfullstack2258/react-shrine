@@ -9,19 +9,6 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { withStyles } from '@material-ui/core/styles';
 
-function Copyright() {
-  return (
-    <Typography variant="body2" color="textSecondary" align="center">
-      {'Copyright © '}
-      <Link color="inherit" href="/">
-        Your Website
-      </Link>{' '}
-      {new Date().getFullYear()}
-      {'.'}
-    </Typography>
-  );
-}
-
 const styles = theme => ({
   '@global': {
     body: {
@@ -130,7 +117,6 @@ const SignUp = ({ classes }) => {
           </Grid>
         </form>
       </div>
-      <Copyright />
     </div>
   );
 };
