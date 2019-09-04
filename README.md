@@ -34,3 +34,21 @@ Development (Webpack dev server) mode:
 ```shell
 npm run start:dev
 ```
+
+## Testing
+
+Test using Jest:
+```shell
+npm run test
+```
+
+Run storybook
+```shell
+npm run storybook
+```
+
+## GraphQL server
+
+```shell
+http://localhost:8080/graphql
+```
