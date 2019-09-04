@@ -1,0 +1,42 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`NumberInput renders correctly 1`] = `
+<div
+  className="NumberInput-container-1"
+>
+  <WithStyles(Button)
+    classes={
+      Object {
+        "outlined": "NumberInput-leftButton-3",
+        "root": "NumberInput-button-2",
+      }
+    }
+    onClick={[Function]}
+    variant="outlined"
+  >
+    <pure(RemoveIcon) />
+  </WithStyles(Button)>
+  <WithStyles(Input)
+    classes={
+      Object {
+        "input": "NumberInput-input-5",
+        "root": "NumberInput-inputRoot-6",
+      }
+    }
+    disableUnderline={true}
+    value={1}
+  />
+  <WithStyles(Button)
+    classes={
+      Object {
+        "outlined": "NumberInput-rightButton-4",
+        "root": "NumberInput-button-2",
+      }
+    }
+    onClick={[Function]}
+    variant="outlined"
+  >
+    <pure(AddIcon) />
+  </WithStyles(Button)>
+</div>
+`;
