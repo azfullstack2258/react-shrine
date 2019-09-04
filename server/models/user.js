@@ -6,9 +6,15 @@ const { Schema } = mongoose;
 
 const userSchema = new Schema(
   {
-    username: {
+    email: {
       type: String,
       required: true,
+    },
+    firstName: {
+      type: String,
+    },
+    lastName: {
+      type: String,
     },
     password: {
       type: String,
@@ -25,5 +31,31 @@ userSchema.statics.findByToken = async function(token) {
   const decoded = jwt.verify(token, process.env.SECRET);
   return this.findOne({ _id: decoded.id });
 };
+
+userSchema.method({
+  passwordMatches(password) {
+    return bcrypt.compareSync(password, this.password);
+  },
+  transform() {
+    const transformed = {};
+    transformed['email'] = this.email;
+    transformed['fullName'] = this.firstName + ' ' + this.lastName;
+    return transformed;
+  },
+});
+
+userSchema.pre('save', async function save(next) {
+  try {
+    if (!this.isModified('password')) {
+      return next();
+    }
+
+    this.password = bcrypt.hashSync(this.password);
+
+    return next();
+  } catch (error) {
+    return next(error);
+  }
+});
 
 module.exports = mongoose.model('User', userSchema);

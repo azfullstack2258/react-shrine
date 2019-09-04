@@ -12,22 +12,18 @@ const webpackDevMiddleware = require('webpack-dev-middleware');
 const webpackHotMiddleware = require('webpack-hot-middleware');
 const User = require('./models/user');
 const schema = require('./graphql/schema');
-const pubsub = require('./graphql/pubSub');
 const config = require('../config/config');
 const webpackConfig = require('../webpack.config');
 
-const WS_PORT = 5000;
-const WS_GQL_PATH = '/subscriptions';
-
 const isDev = process.env.NODE_ENV !== 'production';
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 8080;
 
 // Configuration
 // ================================================================================================
 
 // Set up Mongoose
 mongoose.connect(isDev ? config.db_dev : config.db, {
-  useFindAndModify: false
+  useFindAndModify: false,
 });
 mongoose.Promise = global.Promise;
 
@@ -42,10 +38,10 @@ app.use(
     context: await (async () => {
       const { token } = request.cookies;
       const user = await User.findByToken(token);
-      return { user, pubsub };
+      return { user };
     })(),
-    graphiql: true
-  }))
+    graphiql: true,
+  })),
 );
 const server = createServer(app);
 
@@ -61,8 +57,8 @@ if (isDev) {
 
   app.use(
     historyApiFallback({
-      verbose: false
-    })
+      verbose: false,
+    }),
   );
 
   app.use(
@@ -75,9 +71,9 @@ if (isDev) {
         timings: true,
         chunks: false,
         chunkModules: false,
-        modules: false
-      }
-    })
+        modules: false,
+      },
+    }),
   );
 
   app.use(webpackHotMiddleware(compiler));

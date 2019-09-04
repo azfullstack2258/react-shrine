@@ -1,0 +1,4 @@
+type Mutation {
+  createUser(input: UserInfo!): UserPayload
+  login(email: String!, password: String): UserPayload
+}

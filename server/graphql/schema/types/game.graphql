@@ -1,0 +1,15 @@
+type Game {
+  title: String
+  gameResults: [GameResult]
+}
+
+type Player {
+  user: User
+  gameResult: GameResult
+}
+
+type GameResult {
+  player: String
+  score: Float
+  rank: Int
+}
