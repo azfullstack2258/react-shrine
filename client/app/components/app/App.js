@@ -94,7 +94,7 @@ const App = ({ classes, children, history }) => {
   const isAuthPage = AUTH_URLS.includes(pageName);
 
   useEffect(() => {
-    if (!Auth.getToken() && !AUTH_URLS.includes(pageName) && !USER_AUTH_PAGES.includes(pageName)) {
+    if (!Auth.getToken() && !AUTH_URLS.includes(pageName)) {
       history.push('/login');
     }
   }, [history.location.pathname]);

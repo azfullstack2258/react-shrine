@@ -9,6 +9,9 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { withStyles } from '@material-ui/core/styles';
 
+import { withSignup } from 'app/providers/Auth';
+import Auth from 'app/utils/auth';
+
 const styles = theme => ({
   '@global': {
     body: {
@@ -39,86 +42,152 @@ const styles = theme => ({
   },
 });
 
-const SignUp = ({ classes }) => {
-  return (
-    <div className={classes.container}>
-      <CssBaseline />
-      <div className={classes.paper}>
-        <Avatar className={classes.avatar}>
-          <LockOutlinedIcon />
-        </Avatar>
-        <Typography component="h1" variant="h5">
-          Sign up
-        </Typography>
-        <form className={classes.form} noValidate>
-          <Grid container spacing={8}>
-            <Grid item xs={12} sm={6}>
-              <TextField
-                autoComplete="fname"
-                name="firstName"
-                variant="outlined"
-                required
-                fullWidth
-                id="firstName"
-                label="First Name"
-                autoFocus
-              />
+@withSignup
+class SignUp {
+  state = {
+    firstName: '',
+    lastName: '',
+    email: '',
+    password: '',
+    confirm: '',
+  };
+  handleChange = name => e => {
+    this.setState({ [name]: e.target.value });
+  };
+  handleSubmit = e => {
+    const { firstName, lastName, email, password, confirm } = this.state;
+    e.preventDefault();
+    this.setState({ err: '', proceeding: true });
+    this.props
+      .createUser({
+        variables: {
+          input: { firstName, lastName, email, password, confirm },
+        },
+      })
+      .then(res => {
+        const { data } = res;
+        const { fullName, token, email } = data.createUser;
+        Auth.setUser(fullName, token, email);
+
+        const redirect = new URLSearchParams(location.search).get('redirect');
+
+        if (redirect) {
+          window.location.href = redirect;
+          return;
+        }
+
+        this.props.history.push('/');
+      })
+      .catch(err => {
+        console.log(err.message);
+        this.setState({ err: err.message.replace('GraphQL error: ', ''), proceeding: false });
+      });
+  };
+  render() {
+    const { firstName, lastName, email, password, confirm } = this.state;
+    const { classes } = this.props;
+    return (
+      <div className={classes.container}>
+        <CssBaseline />
+        <div className={classes.paper}>
+          <Avatar className={classes.avatar}>
+            <LockOutlinedIcon />
+          </Avatar>
+          <Typography component="h1" variant="h5">
+            Sign up
+          </Typography>
+          <form className={classes.form} noValidate>
+            <Grid container spacing={8}>
+              <Grid item xs={12} sm={6}>
+                <TextField
+                  autoComplete="fname"
+                  name="firstName"
+                  variant="outlined"
+                  required
+                  fullWidth
+                  id="firstName"
+                  label="First Name"
+                  value={firstName}
+                  onChange={this.handleChange('firstName')}
+                  autoFocus
+                />
+              </Grid>
+              <Grid item xs={12} sm={6}>
+                <TextField
+                  variant="outlined"
+                  required
+                  fullWidth
+                  id="lastName"
+                  label="Last Name"
+                  name="lastName"
+                  value={lastName}
+                  onChange={this.handleChange('lastName')}
+                  autoComplete="lname"
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  variant="outlined"
+                  required
+                  fullWidth
+                  id="email"
+                  label="Email Address"
+                  name="email"
+                  value={email}
+                  onChange={this.handleChange('email')}
+                  autoComplete="email"
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  variant="outlined"
+                  required
+                  fullWidth
+                  name="password"
+                  label="Password"
+                  type="password"
+                  id="password"
+                  value={password}
+                  onChange={this.handleChange('password')}
+                  autoComplete="current-password"
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  variant="outlined"
+                  required
+                  fullWidth
+                  name="confirm"
+                  label="Confirm"
+                  type="password"
+                  id="confirm"
+                  value={confirm}
+                  onChange={this.handleChange('confirm')}
+                  autoComplete="current-password"
+                />
+              </Grid>
             </Grid>
-            <Grid item xs={12} sm={6}>
-              <TextField
-                variant="outlined"
-                required
-                fullWidth
-                id="lastName"
-                label="Last Name"
-                name="lastName"
-                autoComplete="lname"
-              />
+            <Button
+              type="submit"
+              fullWidth
+              variant="contained"
+              color="primary"
+              className={classes.submit}
+            >
+              Sign Up
+            </Button>
+            <Grid container justify="flex-end">
+              <Grid item>
+                <Link href="/login" variant="body2">
+                  Already have an account? Sign in
+                </Link>
+              </Grid>
             </Grid>
-            <Grid item xs={12}>
-              <TextField
-                variant="outlined"
-                required
-                fullWidth
-                id="email"
-                label="Email Address"
-                name="email"
-                autoComplete="email"
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <TextField
-                variant="outlined"
-                required
-                fullWidth
-                name="password"
-                label="Password"
-                type="password"
-                id="password"
-                autoComplete="current-password"
-              />
-            </Grid>
-          </Grid>
-          <Button
-            type="submit"
-            fullWidth
-            variant="contained"
-            color="primary"
-            className={classes.submit}
-          >
-            Sign Up
-          </Button>
-          <Grid container justify="flex-end">
-            <Grid item>
-              <Link href="/login" variant="body2">
-                Already have an account? Sign in
-              </Link>
-            </Grid>
-          </Grid>
-        </form>
+          </form>
+        </div>
       </div>
-    </div>
-  );
-};
+    );
+  }
+}
 
 export default withStyles(styles, { withTheme: true })(SignUp);

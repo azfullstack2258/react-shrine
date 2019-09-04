@@ -1,8 +1,7 @@
 type User {
   token: String!
   _id: ID!
-  username: String
-  name: String
-  birthday: String
-  country: String
+  email: String
+  firstName: String
+  lastName: String
 }

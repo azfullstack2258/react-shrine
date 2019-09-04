@@ -1,0 +1,5 @@
+type UserPayload {
+  fullName: String
+  email: String
+  token: String
+}

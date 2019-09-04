@@ -13,6 +13,9 @@ import {
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import { withStyles } from '@material-ui/core/styles';
 
+import { withLogin } from '../../providers/Auth';
+import Auth from 'app/utils/auth';
+
 const styles = theme => ({
   '@global': {
     body: {
@@ -43,69 +46,116 @@ const styles = theme => ({
   },
 });
 
-const SignIn = ({ classes }) => {
-  return (
-    <div className={classes.container}>
-      <CssBaseline />
-      <div className={classes.paper}>
-        <Avatar className={classes.avatar}>
-          <LockOutlinedIcon />
-        </Avatar>
-        <Typography component="h1" variant="h5">
-          Sign in
-        </Typography>
-        <form className={classes.form} noValidate>
-          <TextField
-            variant="outlined"
-            margin="normal"
-            required
-            fullWidth
-            id="email"
-            label="Email Address"
-            name="email"
-            autoComplete="email"
-            autoFocus
-          />
-          <TextField
-            variant="outlined"
-            margin="normal"
-            required
-            fullWidth
-            name="password"
-            label="Password"
-            type="password"
-            id="password"
-            autoComplete="current-password"
-          />
-          <FormControlLabel
-            control={<Checkbox value="remember" color="primary" />}
-            label="Remember me"
-          />
-          <Button
-            type="submit"
-            fullWidth
-            variant="contained"
-            color="primary"
-            className={classes.submit}
-          >
-            Sign In
-          </Button>
-          <Grid container>
-            <Grid item xs>
-              <Link href="#" variant="body2">
-                Forgot password?
-              </Link>
+@withLogin
+class SignIn extends React.Component {
+  state = {
+    err: '',
+    proceeding: false,
+    email: '',
+    password: '',
+  };
+  handleChange = name => e => {
+    this.setState({ [name]: e.target.value });
+  };
+  handleSubmit = e => {
+    const { email, password } = this.state;
+    e.preventDefault();
+
+    this.props
+      .login({
+        variables: {
+          email,
+          password,
+        },
+      })
+      .then(res => {
+        const { data } = res;
+        const { token, fullName, email } = data.login;
+
+        Auth.setUser(fullName, token, email);
+
+        const redirect = new URLSearchParams(location.search).get('redirect');
+
+        if (redirect) {
+          window.location.href = redirect;
+        }
+        this.props.history.push('/');
+      })
+      .catch(err => {
+        this.setState({ err: err.message.replace('GraphQL error: ', ''), proceeding: false });
+      });
+  };
+  render() {
+    const { classes } = this.props;
+    const { email, password } = this.state;
+
+    return (
+      <div className={classes.container}>
+        <CssBaseline />
+        <div className={classes.paper}>
+          <Avatar className={classes.avatar}>
+            <LockOutlinedIcon />
+          </Avatar>
+          <Typography component="h1" variant="h5">
+            Sign in
+          </Typography>
+          <form className={classes.form} noValidate onSubmit={this.handleSubmit}>
+            <TextField
+              variant="outlined"
+              margin="normal"
+              required
+              fullWidth
+              id="email"
+              label="Email Address"
+              name="email"
+              autoComplete="email"
+              value={email}
+              onChange={this.handleChange('email')}
+              autoFocus
+            />
+            <TextField
+              variant="outlined"
+              margin="normal"
+              required
+              fullWidth
+              name="password"
+              label="Password"
+              type="password"
+              id="password"
+              value={password}
+              onChange={this.handleChange('password')}
+              autoComplete="current-password"
+            />
+            <FormControlLabel
+              control={<Checkbox value="remember" color="primary" />}
+              label="Remember me"
+            />
+            <Button
+              type="submit"
+              fullWidth
+              variant="contained"
+              color="primary"
+              className={classes.submit}
+            >
+              Sign In
+            </Button>
+            <Grid container>
+              <Grid item xs>
+                <Link href="#" variant="body2">
+                  Forgot password?
+                </Link>
+              </Grid>
+              <Grid item>
+                <Link href="/signup" variant="body2">
+                  {"Don't have an account? Sign Up"}
+                </Link>
+              </Grid>
             </Grid>
-            <Grid item>
-              <Link href="/signup" variant="body2">
-                {"Don't have an account? Sign Up"}
-              </Link>
-            </Grid>
-          </Grid>
-        </form>
+          </form>
+        </div>
       </div>
-    </div>
-  );
-};
+    );
+  }
+}
 
 export default withStyles(styles)(SignIn);

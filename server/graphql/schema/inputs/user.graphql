@@ -1,0 +1,7 @@
+input UserInfo {
+  firstName: String
+  lastName: String
+  email: String!
+  password: String!
+  confirm: String!
+}

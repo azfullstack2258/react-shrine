@@ -1,8 +1,4 @@
-const {
-  query,
-  mutation,
-  directive
-} = require('../../graphql/resolvers/index');
+const { query, mutation, directive } = require('../../graphql/resolvers/index');
 const path = require('path');
 const fs = require('fs');
 const { mergeStrings } = require('gql-merge');
@@ -22,6 +18,8 @@ const readData = dir => {
 
 const schema = `
   ${readData('types')}
+  ${readData('payloads')}
+  ${readData('inputs')}
   ${readData('directives')}
   ${readData('query.graphql')}
   ${readData('mutation.graphql')}  
@@ -32,6 +30,6 @@ module.exports = makeExecutableSchema({
   schemaDirectives: directive,
   resolvers: {
     Query: query,
-    Mutation: mutation
-  }
+    Mutation: mutation,
+  },
 });
