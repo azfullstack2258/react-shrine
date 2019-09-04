@@ -8,6 +8,13 @@
 npm install
 ```
 
+## How do we handle X?
+
+- [Coding Standards](docs/CODING_STANDARDS.md)
+- [Styling](docs/STYLING.md)
+- [Storybook](docs/STORYBOOK.md)
+- [CHANGElOG](../../docs/CHANGELOG.md)
+
 **Configure app**
 
 * Rename `config.example.js` to `config.js` in `/src` dir.
