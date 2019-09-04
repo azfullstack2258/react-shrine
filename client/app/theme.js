@@ -22,34 +22,34 @@ const baseObject = {
         900: '#707070',
         A100: 'rgba(0, 0, 0, 0.16)',
         A200: 'rgba(0, 0, 0, 0.35)',
-        A300: 'rgba(0, 0, 0, 0.40)'
+        A300: 'rgba(0, 0, 0, 0.40)',
       },
       blue: {
         ...blue,
         100: '#274070',
         200: '#293F6F',
-        300: '#133360'
+        300: '#133360',
       },
       green: {
         ...green,
-        500: '#21B6A8'
-      }
+        500: '#21B6A8',
+      },
     },
     primary: {
       highlight: '#762256',
       default: '#343434',
       main: '#343434',
       contrastText: 'white',
-      error: '#e01c1c'
+      error: '#e01c1c',
     },
     secondary: {
       main: '#21B6A8',
-      contrastText: 'white'
+      contrastText: 'white',
     },
     background: {
       paper: '#FFFFFF',
-      default: '#FFFFFF'
-    }
+      default: '#FFFFFF',
+    },
   },
   overrides: {
     MuiButton: {
@@ -57,27 +57,27 @@ const baseObject = {
         fontFamily: 'Montserrat',
         fontWeight: 600,
         '&:hover': {
-          backgroundColor: '#21B6A8'
-        }
+          backgroundColor: '#21B6A8',
+        },
       },
       containedPrimary: {
         fontFamily: 'Montserrat',
         fontWeight: 600,
         '&:hover': {
-          backgroundColor: '#343434'
-        }
-      }
+          backgroundColor: '#343434',
+        },
+      },
     },
     MuiDivider: {
       root: {
-        backgroundColor: '#AFAFAF'
-      }
-    }
+        backgroundColor: '#AFAFAF',
+      },
+    },
   },
   typography: {
     fontFamily: ['Montserrat', 'Oswald', 'Roboto'],
-    useNextVariants: true
-  }
+    useNextVariants: true,
+  },
 };
 
 export default baseObject;
